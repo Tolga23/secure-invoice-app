@@ -10,7 +10,7 @@ export interface User {
   imageUrl?: string
   enable: boolean
   isNotLocked: boolean
-  isUsingAuth: boolean
+  usingAuth: boolean
   roleName: string
   permissions: string
 

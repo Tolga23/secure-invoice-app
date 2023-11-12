@@ -8,14 +8,22 @@ import {Profile} from "../interface/profile";
   providedIn: 'root'
 })
 export class UserService {
-  private readonly baseUrl = '/api/user'
+  private readonly baseUrl = 'http://localhost:8080/api/user'
 
   constructor(private http: HttpClient) {
   }
 
   login$ = (email: string, password: string) => <Observable<CustomHttpResponse<Profile>>>
     this.http.post<CustomHttpResponse<Profile>>
-    (`{this.baseUrl}/login`, {email, password})
+    (`${this.baseUrl}/login`, {email, password})
+      .pipe(
+        tap(console.log),
+        catchError(this.handleError)
+      );
+
+  verifyCode$ = (email: string, code: string) => <Observable<CustomHttpResponse<Profile>>>
+    this.http.get<CustomHttpResponse<Profile>>
+    (`${this.baseUrl}/verify/code/${email}/${code}`)
       .pipe(
         tap(console.log),
         catchError(this.handleError)

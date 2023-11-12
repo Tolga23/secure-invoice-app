@@ -5,7 +5,7 @@ export interface LoginState {
   loginSuccess?: boolean
   error?: string
   message?: string
-  isUsingAuth?: boolean
+  usingAuth?: boolean
   phone?: string
 }
 
