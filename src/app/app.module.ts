@@ -10,6 +10,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
+import { CustomerComponent } from './pages/customer/customer.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { HomeComponent } from './pages/home/home.component';
+import { CustomersComponent } from './pages/customers/customers.component';
+import { NavbarComponent } from './pages/navbar/navbar.component';
+import { StatsComponent } from './pages/stats/stats.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +23,13 @@ import {FormsModule} from "@angular/forms";
     VerifyComponent,
     RegisterComponent,
     LoginComponent,
-    ResetpasswordComponent
+    ResetpasswordComponent,
+    CustomerComponent,
+    ProfileComponent,
+    HomeComponent,
+    CustomersComponent,
+    NavbarComponent,
+    StatsComponent
   ],
   imports: [
     BrowserModule,
