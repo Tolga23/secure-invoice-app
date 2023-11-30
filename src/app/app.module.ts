@@ -8,7 +8,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { ResetpasswordComponent } from './pages/resetpassword/resetpassword.component';
 import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 import { CustomerComponent } from './pages/customer/customer.component';
 import { ProfileComponent } from './pages/profile/profile.component';
@@ -16,6 +16,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { CustomersComponent } from './pages/customers/customers.component';
 import { NavbarComponent } from './pages/navbar/navbar.component';
 import { StatsComponent } from './pages/stats/stats.component';
+import {TokenInterceptor} from "./interceptor/token.interceptor";
 
 @NgModule({
   declarations: [
@@ -38,7 +39,7 @@ import { StatsComponent } from './pages/stats/stats.component';
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

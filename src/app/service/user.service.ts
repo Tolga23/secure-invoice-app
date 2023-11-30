@@ -42,7 +42,7 @@ export class UserService {
 
   profile$ = () => <Observable<CustomHttpResponse<Profile>>>
     this.http.get<CustomHttpResponse<Profile>>
-    (`${this.baseUrl}/profile`, {headers: new HttpHeaders().set('Authorization', 'Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJHRVRfU0VDVVJFIiwiYXVkIjoiQ1VTVE9NX01BTkFHRU1FTlRfU0VSVklDRSIsImlhdCI6MTcwMDcwODI2OCwic3ViIjoiNjAyIiwiYXV0aG9yaXRpZXMiOlsiUkVBRDpVU0VSIiwiUkVBRDpDVVNUT01FUiIsIkNSRUFURTpVU0VSIiwiQ1JFQVRFOkNVU1RPTUVSIiwiVVBEQVRFOlVTRVIiLCJVUERBVEU6Q1VTVE9NRVIiLCJERUxFVEU6VVNFUiIsIkRFTEVURTpDVVNUT01FUiJdLCJleHAiOjE3MDA3MTAwNjh9.wQ9Aqfzo4vmADrjy7IUYhDm5viAqdwCOFx6miXPzirSZZAOJLrJSsDffaykeCvM1JyNRNpnb6-LKZrXF677qhw')})
+    (`${this.baseUrl}/profile`, )
       .pipe(
         tap(console.log),
         catchError(this.handleError)
