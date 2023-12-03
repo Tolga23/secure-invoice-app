@@ -5,13 +5,17 @@ import {
   HttpEvent,
   HttpInterceptor, HttpResponse, HttpErrorResponse
 } from '@angular/common/http';
-import {catchError, Observable, throwError} from 'rxjs';
+import {BehaviorSubject, catchError, Observable, switchMap, throwError} from 'rxjs';
 import {Key} from "../enum/key.enum";
+import {UserService} from "../service/user.service";
+import {CustomHttpResponse} from "../interface/customhttpresponse";
+import {Profile} from "../interface/profile";
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-
-  constructor() {
+  private isTokenRefreshing: boolean = false;
+  private refreshTokenSubject: BehaviorSubject<CustomHttpResponse<Profile>> = new BehaviorSubject(null)
+  constructor(private userService: UserService) {
   }
 
   // This method intercepts HTTP requests and modifies them before they are sent.
@@ -25,23 +29,44 @@ export class TokenInterceptor implements HttpInterceptor {
     // If the request URL does not include any of the above strings,
     // an authentication token is added to the request headers.
     // The token is retrieved from the local storage.
-    return next.handle(this.addAuthenticationTokenHeader(request, localStorage.getItem(Key.TOKEN)))
+    return next.handle(this.addAuthorizationTokenHeader(request, localStorage.getItem(Key.TOKEN)))
       .pipe(
         catchError((error: HttpErrorResponse) => {
           if (error instanceof HttpErrorResponse && error.status === 401 && error.error.message.includes('expired')) {
-            this.handleRefreshToken(request, next);
+            return this.handleRefreshToken(request, next);
           } else {
             return throwError(() => error);
           }
         })
+      );
+  }
+
+
+  private handleRefreshToken(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    if (!this.isTokenRefreshing) {
+      console.log('Refreshing Token...');
+      this.isTokenRefreshing = true;
+      this.refreshTokenSubject.next(null);
+      return this.userService.refreshToken$().pipe(
+        switchMap((response) => {
+          console.log('Token Refresh Response:', response);
+          this.isTokenRefreshing = false;
+          this.refreshTokenSubject.next(response);
+          console.log('New Token:', response.data.access_token);
+          console.log('Sending original request:', request);
+          return next.handle(this.addAuthorizationTokenHeader(request, response.data.access_token))
+        })
+      );
+    } else {
+      this.refreshTokenSubject.pipe(
+        switchMap((response) => {
+          return next.handle(this.addAuthorizationTokenHeader(request, response.data.access_token))
+        })
       )
+    }
   }
 
-  private addAuthenticationTokenHeader(request: HttpRequest<unknown>, token: string): HttpRequest<any> {
+  private addAuthorizationTokenHeader(request: HttpRequest<unknown>, token: string): HttpRequest<any> {
     return request.clone({setHeaders: {Authorization: `Bearer ${token}`}});
-  }
-
-  private handleRefreshToken(request: HttpRequest<unknown>, next: HttpHandler) {
-    
   }
 }

@@ -4,12 +4,13 @@ import {catchError, Observable, tap, throwError} from "rxjs";
 import {CustomHttpResponse} from "../interface/customhttpresponse";
 import {Profile} from "../interface/profile";
 import {User} from "../interface/user";
+import {Key} from "../enum/key.enum";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private readonly baseUrl = 'http://localhost:8080/api/user'
+  private readonly baseUrl: string = 'http://localhost:8080/api/user'
 
   constructor(private http: HttpClient) {
   }
@@ -42,11 +43,26 @@ export class UserService {
 
   profile$ = () => <Observable<CustomHttpResponse<Profile>>>
     this.http.get<CustomHttpResponse<Profile>>
-    (`${this.baseUrl}/profile`, )
+    (`${this.baseUrl}/profile`,)
       .pipe(
         tap(console.log),
         catchError(this.handleError)
       )
+
+  refreshToken$ = () => <Observable<CustomHttpResponse<Profile>>>
+    this.http.get<CustomHttpResponse<Profile>>
+    (`${this.baseUrl}/refresh/token`, { headers: { Authorization: `Bearer ${localStorage.getItem(Key.REFRESH_TOKEN)}` }})
+      .pipe(
+        tap(response => {
+          console.log(response);
+          localStorage.removeItem(Key.TOKEN);
+          localStorage.removeItem(Key.REFRESH_TOKEN);
+          localStorage.setItem(Key.TOKEN, response.data.access_token);
+          localStorage.setItem(Key.REFRESH_TOKEN, response.data.refresh_token);
+        }),
+        catchError(this.handleError)
+      );
+
 
 
   updateProfile$ = (user: User) => <Observable<CustomHttpResponse<Profile>>>
