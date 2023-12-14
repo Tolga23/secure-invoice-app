@@ -46,6 +46,7 @@ export class ProfileComponent implements OnInit {
   }
 
   updateProfile(profileForm: NgForm): void {
+    // isLoadingSubject is used to show a loading spinner while the request is being processed.
     this.isLoadingSubject.next(true)
     this.profileState$ = this.userService.updateProfile$(profileForm.value)
       .pipe(
@@ -61,6 +62,30 @@ export class ProfileComponent implements OnInit {
           return of({dataState: DataState.LOADED, appData: this.dataSubject.value, error})
         })
       )
+  }
+
+  updatePassword(passwordForm: NgForm): void {
+    this.isLoadingSubject.next(true)
+    if (passwordForm.value.newPassword === passwordForm.value.confirmPassword) {
+      this.profileState$ = this.userService.updatePassword$(passwordForm.value)
+        .pipe(
+          map(response => {
+            console.log(response)
+            this.isLoadingSubject.next(false)
+            return { dataState: DataState.LOADED, appData: this.dataSubject.value}
+          }),
+          startWith({dataState: DataState.LOADED, appData: this.dataSubject.value}),
+          catchError((error: string) => {
+            this.isLoadingSubject.next(false)
+            return of({dataState: DataState.LOADED, appData: this.dataSubject.value, error})
+          })
+        )
+    } else {
+        passwordForm.reset();
+        this.isLoadingSubject.next(false)
+    }
+
+
   }
 
 }

@@ -51,7 +51,7 @@ export class UserService {
 
   refreshToken$ = () => <Observable<CustomHttpResponse<Profile>>>
     this.http.get<CustomHttpResponse<Profile>>
-    (`${this.baseUrl}/refresh/token`, { headers: { Authorization: `Bearer ${localStorage.getItem(Key.REFRESH_TOKEN)}` }})
+    (`${this.baseUrl}/refresh/token`, {headers: {Authorization: `Bearer ${localStorage.getItem(Key.REFRESH_TOKEN)}`}})
       .pipe(
         tap(response => {
           console.log(response);
@@ -64,10 +64,21 @@ export class UserService {
       );
 
 
-
   updateProfile$ = (user: User) => <Observable<CustomHttpResponse<Profile>>>
     this.http.patch<CustomHttpResponse<Profile>>
     (`${this.baseUrl}/update`, user)
+      .pipe(
+        tap(console.log),
+        catchError(this.handleError)
+      );
+
+  updatePassword$ = (form: {
+    currentPassword: string,
+    newPassword: string,
+    confirmPassword: string
+  }) => <Observable<CustomHttpResponse<Profile>>>
+    this.http.patch<CustomHttpResponse<Profile>>
+    (`${this.baseUrl}/update/password`, form)
       .pipe(
         tap(console.log),
         catchError(this.handleError)
@@ -79,11 +90,14 @@ export class UserService {
 
     if (error.error instanceof ErrorEvent) {
       errorMessage = `An client error occurred: ${error.error.message}`
+      console.log(errorMessage)
     } else {
       if (error.error.reason) {
         errorMessage = error.error.reason
+        console.log(errorMessage)
       } else {
-        errorMessage = `An error occurred - Error status ${error.status}, error message is: ${error.message}`
+        errorMessage = `An error occurred - Error status ${error.status}, error message is: ${error.error.message}`
+        console.log(errorMessage)
       }
     }
 
