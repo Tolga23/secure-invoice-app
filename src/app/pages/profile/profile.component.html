@@ -75,7 +75,7 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="email">Email</label>
+                      <label>Email</label>
                       <input type="text" name="email" [ngModel]="state?.appData?.data?.user?.email"
                              [disabled]="state?.appData?.data?.user?.roleName === 'USER_ROLE' || (isLoading$ | async)"
                              class="form-control">
@@ -146,7 +146,8 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label>New password</label>
-                      <input type="password" name="newPassword" ngModel [disabled]=" (isLoading$ | async)" class="form-control"
+                      <input type="password" name="newPassword" ngModel [disabled]=" (isLoading$ | async)"
+                             class="form-control"
                              minlength="5" required>
                     </div>
                   </div>
@@ -174,27 +175,38 @@
             <div class="tab-pane fade" id="security-tab" role="tabpanel" aria-labelledby="security"
                  style="min-height: 510px;">
               <h3 class="mb-4">Authorization Settings</h3>
-              <form>
+              <form #roleForm="ngForm" (ngSubmit)="updateRole(roleForm)">
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
                       <label style="margin-bottom: 5px;">Role Name</label>
-                      <select name="roleName" class="form-control select-cl" required>
-                        <option class="select-cl">ROLE_ADMIN</option>
+                      <select name="roleName" [ngModel]="state?.appData?.data?.user?.roleName"
+                              [disabled]="!(state?.appData?.data?.user?.roleName === 'SYSTEM_ADMIN_ROLE' || state?.appData?.data?.user?.roleName === 'ADMIN_ROLE') || (isLoading$ | async)"
+                              class="form-control select-cl" required>
+                        <option *ngFor="let role of state?.appData?.data?.roles"
+                                [selected]="state?.appData?.data?.user?.roleName === role.roleName"
+                                [disabled]="!(state?.appData?.data?.user?.roleName === 'SYSTEM_ADMIN_ROLE' || state?.appData?.data?.user?.roleName === 'ADMIN_ROLE') || (isLoading$ | async)"
+                                [ngValue]="role.roleName"
+                                class="select-cl">{{ role.roleName }}
+                        </option>
                       </select>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label style="margin-bottom: 5px;">Role Permissions</label>
-                      <input type="text" class="form-control" style="margin-bottom: 5px;">
+                      <div *ngIf="state?.appData?.data?.user?.permissions">
+                      <input type="text" *ngFor="let permission of state?.appData?.data?.user?.permissions.split(',')"
+                             [value]="permission" [disabled]="true" class="form-control" style="margin-bottom: 5px;">
+                    </div>
                     </div>
                   </div>
                 </div>
                 <div>
-                  <button [disabled]="state?.appData?.data?.user?.roleName === 'USER_ROLE' || (isLoading$ | async)"
-                          type="submit"
-                          class="btn btn-primary">
+                  <button
+                    [disabled]="!(state?.appData?.data?.user?.roleName === 'SYSTEM_ADMIN_ROLE' || state?.appData?.data?.user?.roleName === 'ADMIN_ROLE') || (isLoading$ | async)"
+                    type="submit"
+                    class="btn btn-primary">
                     <span *ngIf="isLoading$ | async" class="spinner-border spinner-border-sm" role="status"
                           aria-hidden="true"
                           style="margin-right: 5px;"></span>
@@ -266,7 +278,7 @@
                   <div class="row align-items-center">
                     <div class="col">
                       <strong class="mb-2">Activity Logs</strong>
-                      <p class="text-muted mb-0">Show the latst activites on your account</p>
+                      <p class="text-muted mb-0">Show the latest activities on your account</p>
                     </div>
                     <div class="col-auto">
                       <div class="custom-control custom-switch">

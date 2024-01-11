@@ -1,5 +1,5 @@
 export interface Role {
   id: number
-  name: string
+  roleName: string
   permission: string
 }
