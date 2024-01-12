@@ -92,6 +92,27 @@ export class UserService {
         catchError(this.handleError)
       );
 
+  /**
+   * This method is used to update the account settings of a user.
+   * It sends a PATCH request to the '/update/settings' endpoint with the user's new settings.
+   *
+   * @param {Object} settings - The new settings of the user.
+   * @param {boolean} settings.enable - The new enable status of the user.
+   * @param {boolean} settings.isNotLocked - The new lock status of the user.
+   *
+   * @returns {Observable<CustomHttpResponse<Profile>>} An Observable that will emit the server's response.
+   * The response is expected to be of type `CustomHttpResponse<Profile>`.
+   */
+  updateAccountSettings$ = (settings: { enable: boolean, isNotLocked: boolean }) => {
+    return <Observable<CustomHttpResponse<Profile>>>
+      this.http.patch<CustomHttpResponse<Profile>>
+      (`${this.baseUrl}/update/settings`, settings)
+        .pipe(
+          tap(console.log),
+          catchError(this.handleError)
+        );
+  };
+
 
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage: string

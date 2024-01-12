@@ -9,7 +9,7 @@ export interface User {
   bio?: string
   imageUrl?: string
   enable: boolean
-  isNotLocked: boolean
+  notLocked: boolean
   usingAuth: boolean
   roleName: string
   permissions: string
