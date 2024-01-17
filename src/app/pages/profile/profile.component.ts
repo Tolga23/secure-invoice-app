@@ -71,14 +71,14 @@ export class ProfileComponent implements OnInit {
       .pipe(
         map(response => {
           console.log(response);
-          this.dataSubject.next({ ...response, data: response.data });
+          this.dataSubject.next({...response, data: response.data});
           this.isLoadingSubject.next(false);
-          return { dataState: DataState.LOADED, appData: this.dataSubject.value };
+          return {dataState: DataState.LOADED, appData: this.dataSubject.value};
         }),
-        startWith({ dataState: DataState.LOADED, appData: this.dataSubject.value }),
+        startWith({dataState: DataState.LOADED, appData: this.dataSubject.value}),
         catchError((error: string) => {
           this.isLoadingSubject.next(false);
-          return of({ dataState: DataState.LOADED, appData: this.dataSubject.value, error })
+          return of({dataState: DataState.LOADED, appData: this.dataSubject.value, error})
         })
       )
   }
@@ -91,7 +91,7 @@ export class ProfileComponent implements OnInit {
           map(response => {
             console.log(response)
             this.isLoadingSubject.next(false)
-            return { dataState: DataState.LOADED, appData: this.dataSubject.value}
+            return {dataState: DataState.LOADED, appData: this.dataSubject.value}
           }),
           startWith({dataState: DataState.LOADED, appData: this.dataSubject.value}),
           catchError((error: string) => {
@@ -100,8 +100,8 @@ export class ProfileComponent implements OnInit {
           })
         )
     } else {
-        passwordForm.reset();
-        this.isLoadingSubject.next(false)
+      passwordForm.reset();
+      this.isLoadingSubject.next(false)
     }
   }
 
@@ -111,14 +111,32 @@ export class ProfileComponent implements OnInit {
       .pipe(
         map(response => {
           console.log(response);
-          this.dataSubject.next({ ...response, data: response.data });
+          this.dataSubject.next({...response, data: response.data});
           this.isLoadingSubject.next(false);
-          return { dataState: DataState.LOADED, appData: this.dataSubject.value };
+          return {dataState: DataState.LOADED, appData: this.dataSubject.value};
         }),
-        startWith({ dataState: DataState.LOADED, appData: this.dataSubject.value }),
+        startWith({dataState: DataState.LOADED, appData: this.dataSubject.value}),
         catchError((error: string) => {
           this.isLoadingSubject.next(false);
-          return of({ dataState: DataState.LOADED, appData: this.dataSubject.value, error })
+          return of({dataState: DataState.LOADED, appData: this.dataSubject.value, error})
+        })
+      )
+  }
+
+  toggleTwoFactorVerification(): void {
+    this.isLoadingSubject.next(true)
+    this.profileState$ = this.userService.toggleTwoFactorVerification$()
+      .pipe(
+        map(response => {
+          console.log(response);
+          this.dataSubject.next({...response, data: response.data});
+          this.isLoadingSubject.next(false);
+          return {dataState: DataState.LOADED, appData: this.dataSubject.value};
+        }),
+        startWith({dataState: DataState.LOADED, appData: this.dataSubject.value}),
+        catchError((error: string) => {
+          this.isLoadingSubject.next(false);
+          return of({dataState: DataState.LOADED, appData: this.dataSubject.value, error})
         })
       )
   }

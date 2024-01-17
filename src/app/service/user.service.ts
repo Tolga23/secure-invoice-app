@@ -113,6 +113,21 @@ export class UserService {
         );
   };
 
+  /**
+   * This method is used to toggle the two-factor verification setting for the user's account.
+   * It sends a PATCH request to the '/update/2fa' endpoint.
+   *
+   * @returns {Observable<CustomHttpResponse<Profile>>} An Observable that will emit the server's response.
+   * The response is expected to be of type `CustomHttpResponse<Profile>`.
+   */
+  toggleTwoFactorVerification$ = () => <Observable<CustomHttpResponse<Profile>>>
+    this.http.patch<CustomHttpResponse<Profile>>
+    (`${this.baseUrl}/update/2fa`, {})
+      .pipe(
+        tap(console.log),
+        catchError(this.handleError)
+      );
+
 
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage: string
