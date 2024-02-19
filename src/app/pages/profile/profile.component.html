@@ -19,8 +19,12 @@
             <div class="p-4">
               <div class="img-circle text-center mb-3">
                          <span style="position: relative">
-                            <img src="https://img.freepik.com/free-icon/user_318-159711.jpg" alt="John" class="shadow"/>
-                         <i class="bi bi-camera-fill right-position"></i>
+                            <img [src]="state?.appData?.data?.user?.imageUrl" alt="John" class="shadow"/>
+                            <!--
+                            This is an icon that, when clicked, triggers the click event of the file input element.
+                            The file input element is used for uploading files, in this case, an image file.
+                            -->
+                            <i (click)="fileInput.click()" class="bi bi-camera-fill right-position"></i>
                          </span>
               </div>
               <h4
@@ -271,7 +275,8 @@
                     <div class="col">
                       <strong class="mb-2">Multi-Factor Authentication</strong>
                       <span *ngIf="state?.appData?.data?.user?.usingAuth" class="badge bg-success mx-3">Enabled</span>
-                      <span *ngIf="!(state?.appData?.data?.user?.usingAuth)" class="badge bg-warning mx-3">Disabled</span>
+                      <span *ngIf="!(state?.appData?.data?.user?.usingAuth)"
+                            class="badge bg-warning mx-3">Disabled</span>
                       <p class="text-muted mb-0">Set up Multi-factor Authentication (MFA) help keep your account more
                         secure</p>
                     </div>
@@ -280,7 +285,8 @@
                               [disabled]="state?.appData?.data?.user?.roleName === 'USER_ROLE' || (isLoading$ | async)"
                               class="btn btn-primary btn-sm">
                         {{ state?.appData?.data?.user?.usingAuth ? 'Disable' : 'Enable' }}
-                        <span *ngIf="(isLoading$ | async)" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+                        <span *ngIf="(isLoading$ | async)" class="spinner-border spinner-border-sm" role="status"
+                              aria-hidden="true"
                               style="margin-right: 5px;"></span>
                       </button>
                     </div>
@@ -351,6 +357,6 @@
 
 <!-- profile image change form -->
 <form enctype="multipart/form-data" style="display:none;">
-  <input type="file" name="image" id="image"
+  <input type="file" #fileInput (change)="updateImage(fileInput.files[0])" name="image" id="image"
          placeholder="file" ngModel accept="image/*"/>
 </form>

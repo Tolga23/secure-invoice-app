@@ -17,6 +17,7 @@ import { CustomersComponent } from './pages/customers/customers.component';
 import { NavbarComponent } from './pages/navbar/navbar.component';
 import { StatsComponent } from './pages/stats/stats.component';
 import {TokenInterceptor} from "./interceptor/token.interceptor";
+import {NgOptimizedImage} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -32,13 +33,14 @@ import {TokenInterceptor} from "./interceptor/token.interceptor";
     NavbarComponent,
     StatsComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    NgbModule,
-    HttpClientModule,
-    FormsModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        NgbModule,
+        HttpClientModule,
+        FormsModule,
+        NgOptimizedImage
+    ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })

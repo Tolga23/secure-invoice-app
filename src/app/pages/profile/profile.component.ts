@@ -141,5 +141,59 @@ export class ProfileComponent implements OnInit {
       )
   }
 
+  /**
+   * This method is used to update the user's profile image.
+   * It first checks if an image file is provided. If not, it does nothing.
+   * If an image file is provided, it sets the isLoadingSubject to true to indicate that a request is being processed.
+   * It then calls the updateImage$ method of the userService with the FormData object created from the image file.
+   * The response from the updateImage$ method is then processed in the map operator.
+   * The imageUrl of the user in the response data is updated to force the browser to reload the image.
+   * The isLoadingSubject is then set to false to indicate that the request has been processed.
+   * If an error occurs during the process, the catchError operator is used to handle the error and the isLoadingSubject is set to false.
+   *
+   * @param {File} image - The image file that needs to be uploaded.
+   * @returns {void}
+   */
+  updateImage(image: File): void {
+    if (image) {
+      this.isLoadingSubject.next(true)
+      this.profileState$ = this.userService.updateImage$(this.getFormData(image))
+        .pipe(
+          map(response => {
+            console.log(response)
+            /** A query parameter is added to the imageUrl with the current time to ensure that the URL is unique and not cached by the browser.*/
+            this.dataSubject.next({
+              ...response,
+              data: {
+                ...response.data,
+                user: {...response.data.user, imageUrl: `${response.data.user.imageUrl}?time=${new Date().getTime()}`}
+              }
+            })
+            this.isLoadingSubject.next(false)
+            return {dataState: DataState.LOADED, appData: this.dataSubject.value}
+          }),
+          startWith({dataState: DataState.LOADED, appData: this.dataSubject.value}),
+          catchError((error: string) => {
+            this.isLoadingSubject.next(false)
+            return of({dataState: DataState.LOADED, appData: this.dataSubject.value, error})
+          })
+        )
+    }
+  }
+
+  /**
+   * This method is used to create a FormData object and append an image file to it.
+   * FormData is a key-value pair data structure where the key is the name of the field and the value is the file data.
+   * This method is particularly useful when you want to send a file via an HTTP request.
+   *
+   * @param {File} image - The image file that needs to be appended to the FormData object.
+   * @returns {FormData} - Returns a FormData object with the image file appended to it.
+   */
+  private getFormData(image: File) {
+    const formData = new FormData()
+    // The key 'image' is need to be same as the name of the field in the backend.
+    formData.append('image', image)
+    return formData
+  }
 }
 

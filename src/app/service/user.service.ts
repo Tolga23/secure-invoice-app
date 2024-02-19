@@ -128,6 +128,22 @@ export class UserService {
         catchError(this.handleError)
       );
 
+ /**
+ * This method is used to update the profile image of a user.
+ * It sends a PATCH request to the '/update/image' endpoint with the new image as FormData.
+ *
+ * @param {FormData} formData - The new image of the user as FormData.
+ *
+ * @returns {Observable<CustomHttpResponse<Profile>>} An Observable that will emit the server's response.
+ */
+updateImage$ = (formData: FormData) => <Observable<CustomHttpResponse<Profile>>>
+this.http.patch<CustomHttpResponse<Profile>>
+(`${this.baseUrl}/update/image`, formData)
+  .pipe(
+    tap(console.log),
+    catchError(this.handleError)
+  );
+
 
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage: string
