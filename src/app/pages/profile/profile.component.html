@@ -20,10 +20,10 @@
               <div class="img-circle text-center mb-3">
                          <span style="position: relative">
                             <img [src]="state?.appData?.data?.user?.imageUrl" alt="John" class="shadow"/>
-                            <!--
-                            This is an icon that, when clicked, triggers the click event of the file input element.
-                            The file input element is used for uploading files, in this case, an image file.
-                            -->
+                           <!--
+                           This is an icon that, when clicked, triggers the click event of the file input element.
+                           The file input element is used for uploading files, in this case, an image file.
+                           -->
                             <i (click)="fileInput.click()" class="bi bi-camera-fill right-position"></i>
                          </span>
               </div>
@@ -328,16 +328,25 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>Chrome</td>
-                    <td>192.168.1.209</td>
-                    <td>01-15-2023 5:25:20</td>
+                  <tr *ngFor="let event of state?.appData?.data?.events">
+                    <td>{{ event.device }}</td>
+                    <td>{{ event.ipAddress }}</td>
+                    <td>{{ event.createdAt | date: 'MMMM d, y, h:mm a' }}</td>
                     <td>
-                                     <span class="badge pill bg-success">
-                                             LOGIN_ATTEMPT_SUCCESS
+                                     <span class="badge pill" [ngClass]="[event.eventType === EventType.LOGIN_ATTEMPT_SUCCESS ? 'bg-success' : '',
+                                      event.eventType === EventType.LOGIN_ATTEMPT_FAILURE ? 'bg-danger' : '',
+                                      event.eventType === EventType.PASSWORD_UPDATE ? 'bg-warning' : '',
+                                      event.eventType === EventType.PROFILE_UPDATE ? 'bg-primary' : '',
+                                      event.eventType === EventType.ACCOUNT_SETTINGS_UPDATE ? 'bg-danger' : '',
+                                      event.eventType === EventType.ROLE_UPDATE ? 'bg-info' : '',
+                                      event.eventType === EventType.MFA_UPDATE ? 'bg-info' : '',
+                                      event.eventType === EventType.PROFILE_PICTURE_UPDATE ? 'bg-primary' : '',
+                                      event.eventType === EventType.LOGIN_ATTEMPT ? 'bg-danger' : ''
+                                      ]">
+                                             {{ event.eventType }}
                                      </span>
                     </td>
-                    <td>You logged in successfully</td>
+                    <td>{{ event.description }}</td>
                     <td>
                       <button type="button" class="btn btn-sm" style="background-color: #fd5d0d; font-weight: 450;">
                         Report

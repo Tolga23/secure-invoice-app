@@ -7,6 +7,7 @@ import {State} from "../../interface/state";
 import {CustomHttpResponse} from "../../interface/customhttpresponse";
 import {Profile} from "../../interface/profile";
 import {NgForm} from "@angular/forms";
+import {EventType} from "../../enum/EventType";
 
 @Component({
   selector: 'app-profile',
@@ -19,6 +20,7 @@ export class ProfileComponent implements OnInit {
   private isLoadingSubject = new BehaviorSubject<boolean>(false)
   isLoading$ = this.isLoadingSubject.asObservable()
   readonly DataState = DataState
+  readonly EventType = EventType
 
   constructor(private router: Router, private userService: UserService) {
   }
