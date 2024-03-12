@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {UserService} from "../../service/user.service";
 import {NgForm} from "@angular/forms";
@@ -12,7 +12,7 @@ import {Key} from "../../enum/key.enum";
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   loginState$: Observable<LoginState> = of({dataState: DataState.LOADED})
   private phoneSubject = new BehaviorSubject<string | null>(null)
   private emailSubject = new BehaviorSubject<string | null>(null)
@@ -20,6 +20,10 @@ export class LoginComponent {
 
   constructor(private router: Router, private userService: UserService) {
   }
+
+  ngOnInit(): void {
+        this.userService.isAuthenticated() ? this.router.navigate(['/']) : this.loginPage()
+    }
 
   login(loginForm: NgForm): void {
     this.loginState$ = this.userService.login$(loginForm.value.email, loginForm.value.password)

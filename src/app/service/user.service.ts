@@ -5,13 +5,14 @@ import {CustomHttpResponse} from "../interface/customhttpresponse";
 import {Profile} from "../interface/profile";
 import {User} from "../interface/user";
 import {Key} from "../enum/key.enum";
+import {JwtHelperService} from "@auth0/angular-jwt";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   private readonly baseUrl: string = 'http://localhost:8080/api/user'
-
+  private jwtHelper = new JwtHelperService()
   constructor(private http: HttpClient) {
   }
 
@@ -143,6 +144,18 @@ this.http.patch<CustomHttpResponse<Profile>>
     tap(console.log),
     catchError(this.handleError)
   );
+
+/**
+ * Checks if the user is authenticated.
+ *
+ * This method uses the JwtHelperService to decode the JWT token stored in the local storage and check its expiry.
+ * If the token is present, valid, and not expired, the method returns true, indicating that the user is authenticated.
+ *
+ * @returns {boolean} - Returns true if the user is authenticated, false otherwise.
+ */
+isAuthenticated = () : boolean =>
+  (this.jwtHelper.decodeToken<string>(localStorage.getItem(Key.TOKEN))
+    && !this.jwtHelper.isTokenExpired(localStorage.getItem(Key.TOKEN)))
 
 
   private handleError(error: HttpErrorResponse): Observable<never> {
