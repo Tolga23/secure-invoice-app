@@ -129,33 +129,38 @@ export class UserService {
         catchError(this.handleError)
       );
 
- /**
- * This method is used to update the profile image of a user.
- * It sends a PATCH request to the '/update/image' endpoint with the new image as FormData.
- *
- * @param {FormData} formData - The new image of the user as FormData.
- *
- * @returns {Observable<CustomHttpResponse<Profile>>} An Observable that will emit the server's response.
- */
-updateImage$ = (formData: FormData) => <Observable<CustomHttpResponse<Profile>>>
-this.http.patch<CustomHttpResponse<Profile>>
-(`${this.baseUrl}/update/image`, formData)
-  .pipe(
-    tap(console.log),
-    catchError(this.handleError)
-  );
+  /**
+   * This method is used to update the profile image of a user.
+   * It sends a PATCH request to the '/update/image' endpoint with the new image as FormData.
+   *
+   * @param {FormData} formData - The new image of the user as FormData.
+   *
+   * @returns {Observable<CustomHttpResponse<Profile>>} An Observable that will emit the server's response.
+   */
+  updateImage$ = (formData: FormData) => <Observable<CustomHttpResponse<Profile>>>
+    this.http.patch<CustomHttpResponse<Profile>>
+    (`${this.baseUrl}/update/image`, formData)
+      .pipe(
+        tap(console.log),
+        catchError(this.handleError)
+      );
 
-/**
- * Checks if the user is authenticated.
- *
- * This method uses the JwtHelperService to decode the JWT token stored in the local storage and check its expiry.
- * If the token is present, valid, and not expired, the method returns true, indicating that the user is authenticated.
- *
- * @returns {boolean} - Returns true if the user is authenticated, false otherwise.
- */
-isAuthenticated = () : boolean =>
-  (this.jwtHelper.decodeToken<string>(localStorage.getItem(Key.TOKEN))
-    && !this.jwtHelper.isTokenExpired(localStorage.getItem(Key.TOKEN)))
+  /**
+   * Checks if the user is authenticated.
+   *
+   * This method uses the JwtHelperService to decode the JWT token stored in the local storage and check its expiry.
+   * If the token is present, valid, and not expired, the method returns true, indicating that the user is authenticated.
+   *
+   * @returns {boolean} - Returns true if the user is authenticated, false otherwise.
+   */
+  isAuthenticated = (): boolean =>
+    (this.jwtHelper.decodeToken<string>(localStorage.getItem(Key.TOKEN))
+      && !this.jwtHelper.isTokenExpired(localStorage.getItem(Key.TOKEN)))
+
+  logout(): void {
+    localStorage.removeItem(Key.TOKEN)
+    localStorage.removeItem(Key.REFRESH_TOKEN)
+  }
 
 
   private handleError(error: HttpErrorResponse): Observable<never> {
