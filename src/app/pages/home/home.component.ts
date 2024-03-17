@@ -48,6 +48,25 @@ export class HomeComponent implements OnInit {
       )
   }
 
+  goToPage(pageNumber?: number): void {
+    this.homeState$ = this.customerService.getCustomers$(pageNumber)
+      .pipe(
+        map(response => {
+          this.dataSubject.next(response)
+          this.currentPageSubject.next(pageNumber)
+          return {dataState: DataState.LOADED, appData: response}
+        }),
+        startWith({dataState: DataState.LOADED, appData: this.dataSubject.value }),
+        catchError((error: string) => {
+          return of({dataState: DataState.LOADED, error, appData: this.dataSubject.value})
+        })
+      )
+  }
+
+  goToNextOrPreviousPage(direction?: string): void {
+    this.goToPage(direction === 'next' ? this.currentPageSubject.value + 1 : this.currentPageSubject.value - 1)
+  }
+
   selectCustomer(customer: Customer): void {
 
   }
