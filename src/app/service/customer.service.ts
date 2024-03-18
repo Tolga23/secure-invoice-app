@@ -4,6 +4,7 @@ import {catchError, Observable, tap, throwError} from "rxjs";
 import {CustomHttpResponse} from "../interface/customhttpresponse";
 import {Page} from "../interface/page";
 import {User} from "../interface/user";
+import {Stats} from "../interface/stats";
 
 
 @Injectable({providedIn: 'root'})
@@ -13,8 +14,8 @@ export class CustomerService {
   constructor(private http: HttpClient) {
   }
 
-  getCustomers$ = (page: number = 0) => <Observable<CustomHttpResponse<Page & User>>>
-    this.http.get<CustomHttpResponse<Page & User>>(`${this.baseUrl}/list?page=${page}`)
+  getCustomers$ = (page: number = 0) => <Observable<CustomHttpResponse<Page & User & Stats>>>
+    this.http.get<CustomHttpResponse<Page & User  & Stats>>(`${this.baseUrl}/list?page=${page}`)
       .pipe(
         tap(console.log),
         catchError(this.handleError));
