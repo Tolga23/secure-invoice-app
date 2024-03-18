@@ -18,6 +18,10 @@ import { NavbarComponent } from './pages/navbar/navbar.component';
 import { StatsComponent } from './pages/stats/stats.component';
 import {TokenInterceptor} from "./interceptor/token.interceptor";
 import {NgOptimizedImage} from "@angular/common";
+import { NewcustomerComponent } from './pages/newcustomer/newcustomer.component';
+import { NewinvoiceComponent } from './pages/newinvoice/newinvoice.component';
+import { InvoicesComponent } from './pages/invoices/invoices.component';
+import { InvoiceComponent } from './pages/invoice/invoice.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +35,11 @@ import {NgOptimizedImage} from "@angular/common";
     HomeComponent,
     CustomersComponent,
     NavbarComponent,
-    StatsComponent
+    StatsComponent,
+    NewcustomerComponent,
+    NewinvoiceComponent,
+    InvoicesComponent,
+    InvoiceComponent
   ],
     imports: [
         BrowserModule,
