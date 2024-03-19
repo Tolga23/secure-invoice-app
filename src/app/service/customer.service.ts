@@ -5,6 +5,7 @@ import {CustomHttpResponse} from "../interface/customhttpresponse";
 import {Page} from "../interface/page";
 import {User} from "../interface/user";
 import {Stats} from "../interface/stats";
+import {Customer} from "../interface/customer";
 
 
 @Injectable({providedIn: 'root'})
@@ -15,10 +16,27 @@ export class CustomerService {
   }
 
   getCustomers$ = (page: number = 0) => <Observable<CustomHttpResponse<Page & User & Stats>>>
-    this.http.get<CustomHttpResponse<Page & User  & Stats>>(`${this.baseUrl}/list?page=${page}`)
+    this.http.get<CustomHttpResponse<Page & User & Stats>>(`${this.baseUrl}/list?page=${page}`)
       .pipe(
         tap(console.log),
-        catchError(this.handleError));
+        catchError(this.handleError)
+      );
+
+  newCustomer$ = (customer: Customer) => <Observable<CustomHttpResponse<Customer & User>>>
+    this.http.post<CustomHttpResponse<Customer & User>>
+    (`${this.baseUrl}/create`, customer)
+      .pipe(
+        tap(console.log),
+        catchError(this.handleError)
+      );
+
+  searchCustomer$ = (name: string = '', page: number = 0) => <Observable<CustomHttpResponse<Page & User>>>
+    this.http.get<CustomHttpResponse<Page & User>>
+    (`${this.baseUrl}/search?name=${name}&page=${page}`)
+      .pipe(
+        tap(console.log),
+        catchError(this.handleError)
+      );
 
 
   private handleError(error: HttpErrorResponse): Observable<never> {
