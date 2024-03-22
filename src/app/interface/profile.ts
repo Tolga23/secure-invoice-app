@@ -1,6 +1,6 @@
 import {User} from "./user";
 import {Events} from "./events";
-import {Role} from "./Role";
+import {Role} from "./role";
 
 export interface Profile {
   user?: User

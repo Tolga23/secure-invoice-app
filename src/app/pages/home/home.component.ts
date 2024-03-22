@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {BehaviorSubject, catchError, map, Observable, of, startWith} from "rxjs";
 import {State} from "../../interface/state";
 import {CustomHttpResponse} from "../../interface/customhttpresponse";
-import {Profile} from "../../interface/profile";
 import {DataState} from "../../enum/datastate.enum";
 import {UserService} from "../../service/user.service";
 import {CustomerService} from "../../service/customer.service";
