@@ -7,6 +7,8 @@ import {DataState} from "../../enum/datastate.enum";
 import {State} from "../../interface/state";
 import {CustomerService} from "../../service/customer.service";
 import {NgForm} from "@angular/forms";
+import {Customer} from "../../interface/customer";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-customers',
@@ -25,7 +27,7 @@ export class CustomersComponent implements OnInit {
 
   readonly DataState = DataState;
 
-  constructor(private customerService: CustomerService) {
+  constructor(private router: Router, private customerService: CustomerService) {
   }
 
   ngOnInit(): void {
@@ -75,5 +77,9 @@ export class CustomersComponent implements OnInit {
 
   goToNextOrPreviousPage(direction?: string, name?: string) {
     this.goToPage(direction === 'next' ? this.currentPageSubject.value + 1 : this.currentPageSubject.value - 1, name)
+  }
+
+  selectCustomer(customer: Customer): void {
+    this.router.navigate([`/customer`, customer.id])
   }
 }

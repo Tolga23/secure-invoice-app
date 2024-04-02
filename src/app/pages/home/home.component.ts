@@ -8,6 +8,7 @@ import {CustomerService} from "../../service/customer.service";
 import {Page} from "../../interface/page";
 import {User} from "../../interface/user";
 import {Customer} from "../../interface/customer";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -29,7 +30,7 @@ export class HomeComponent implements OnInit {
 
   readonly DataState = DataState
 
-  constructor(private userService: UserService, private customerService: CustomerService) {
+  constructor(private router: Router, private customerService: CustomerService) {
   }
 
   ngOnInit(): void {
@@ -67,6 +68,6 @@ export class HomeComponent implements OnInit {
   }
 
   selectCustomer(customer: Customer): void {
-
+    this.router.navigate([`/customer/${customer.id}`])
   }
 }
