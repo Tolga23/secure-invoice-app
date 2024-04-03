@@ -6,6 +6,7 @@ import {Page} from "../interface/page";
 import {User} from "../interface/user";
 import {Stats} from "../interface/stats";
 import {Customer} from "../interface/customer";
+import {Customerstate} from "../interface/customerstate";
 
 
 @Injectable({providedIn: 'root'})
@@ -22,9 +23,23 @@ export class CustomerService {
         catchError(this.handleError)
       );
 
+  customer$ = (customerId: number) => <Observable<CustomHttpResponse<Customerstate>>>
+    this.http.get<CustomHttpResponse<Customerstate>>(`${this.baseUrl}/get/${customerId}`)
+      .pipe(
+        tap(console.log),
+        catchError(this.handleError)
+      );
   newCustomer$ = (customer: Customer) => <Observable<CustomHttpResponse<Customer & User>>>
     this.http.post<CustomHttpResponse<Customer & User>>
     (`${this.baseUrl}/create`, customer)
+      .pipe(
+        tap(console.log),
+        catchError(this.handleError)
+      );
+
+  updateCustomer$ = (customer: Customer) => <Observable<CustomHttpResponse<Customerstate>>>
+    this.http.put<CustomHttpResponse<Customerstate>>
+    (`${this.baseUrl}/update`, customer)
       .pipe(
         tap(console.log),
         catchError(this.handleError)
@@ -50,12 +65,13 @@ export class CustomerService {
         errorMessage = error.error.reason
         console.log(errorMessage)
       } else {
-        errorMessage = `An error occurred - Error status ${error.status}, error message is: ${error.error.message}`
+        errorMessage = `An error occurred - Error status ${error.status}, error message is: ${error.error.message}` + error.message
         console.log(errorMessage)
       }
     }
 
     return throwError(() => error.error.message || `An error occurred - Error status ${error.status}`)
   }
+
 
 }
