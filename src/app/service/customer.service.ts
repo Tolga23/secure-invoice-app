@@ -7,6 +7,7 @@ import {User} from "../interface/user";
 import {Stats} from "../interface/stats";
 import {Customer} from "../interface/customer";
 import {Customerstate} from "../interface/customerstate";
+import {Invoice} from "../interface/invoice";
 
 
 @Injectable({providedIn: 'root'})
@@ -53,6 +54,21 @@ export class CustomerService {
         catchError(this.handleError)
       );
 
+  getInvoicesCustomer$ = () => <Observable<CustomHttpResponse<Customer[] & User>>>
+    this.http.get<CustomHttpResponse<Customer[] & User>>
+    (`${this.baseUrl}/invoice/new`,)
+      .pipe(
+        tap(console.log),
+        catchError(this.handleError)
+      );
+
+  createInvoices$ = (customerId: number, invoice: Invoice) => <Observable<CustomHttpResponse<Customer[] & User>>>
+    this.http.post<CustomHttpResponse<Customer[] & User>>
+    (`${this.baseUrl}/invoice/add/${customerId}`, invoice)
+      .pipe(
+        tap(console.log),
+        catchError(this.handleError)
+      );
 
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage: string
