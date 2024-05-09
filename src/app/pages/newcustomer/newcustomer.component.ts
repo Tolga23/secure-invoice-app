@@ -15,8 +15,8 @@ import {Customer} from "../../interface/customer";
   styleUrls: ['./newcustomer.component.css']
 })
 export class NewcustomerComponent implements OnInit {
-  newCustomerState$: Observable<State<CustomHttpResponse<Page & User>>>
-  private dataSubject = new BehaviorSubject<CustomHttpResponse<Page & User>>(null)
+  newCustomerState$: Observable<State<CustomHttpResponse<Page<Customer> & User>>>
+  private dataSubject = new BehaviorSubject<CustomHttpResponse<Page<Customer> & User>>(null)
   private isLoadingSubject = new BehaviorSubject<boolean>(false)
   isLoading$ = this.isLoadingSubject.asObservable()
   readonly DataState = DataState

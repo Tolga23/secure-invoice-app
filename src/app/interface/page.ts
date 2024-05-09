@@ -14,8 +14,8 @@ import {Customer} from "./customer";
  * @property {number} size - The size of each page (i.e., the number of Customer objects a page can contain).
  * @property {number} number - The current page number.
  */
-export interface Page {
-  content: Customer[]
+export interface Page<T> {
+  content: T[]
   totalPages: number
   totalElements: number
   numberOfElements: number
