@@ -17,8 +17,8 @@ export class CustomerService {
   constructor(private http: HttpClient) {
   }
 
-  getCustomers$ = (page: number = 0) => <Observable<CustomHttpResponse<Page & User & Stats>>>
-    this.http.get<CustomHttpResponse<Page & User & Stats>>(`${this.baseUrl}/list?page=${page}`)
+  getCustomers$ = (page: number = 0) => <Observable<CustomHttpResponse<Page<Customer> & User & Stats>>>
+    this.http.get<CustomHttpResponse<Page<Customer> & User & Stats>>(`${this.baseUrl}/list?page=${page}`)
       .pipe(
         tap(console.log),
         catchError(this.handleError)
@@ -46,8 +46,8 @@ export class CustomerService {
         catchError(this.handleError)
       );
 
-  searchCustomer$ = (name: string = '', page: number = 0) => <Observable<CustomHttpResponse<Page & User>>>
-    this.http.get<CustomHttpResponse<Page & User>>
+  searchCustomer$ = (name: string = '', page: number = 0) => <Observable<CustomHttpResponse<Page<Customer> & User>>>
+    this.http.get<CustomHttpResponse<Page<Customer> & User>>
     (`${this.baseUrl}/search?name=${name}&page=${page}`)
       .pipe(
         tap(console.log),
@@ -69,6 +69,14 @@ export class CustomerService {
         tap(console.log),
         catchError(this.handleError)
       );
+
+  invoices$ = (page: number = 0) => <Observable<CustomHttpResponse<Page<Invoice> & User & Stats>>>
+    this.http.get<CustomHttpResponse<Page<Invoice> & User & Stats>>(`${this.baseUrl}/invoice/list?page=${page}`)
+      .pipe(
+        tap(console.log),
+        catchError(this.handleError)
+      );
+
 
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage: string
