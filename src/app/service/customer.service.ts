@@ -71,7 +71,16 @@ export class CustomerService {
       );
 
   invoices$ = (page: number = 0) => <Observable<CustomHttpResponse<Page<Invoice> & User & Stats>>>
-    this.http.get<CustomHttpResponse<Page<Invoice> & User & Stats>>(`${this.baseUrl}/invoice/list?page=${page}`)
+    this.http.get<CustomHttpResponse<Page<Invoice> & User & Stats>>
+    (`${this.baseUrl}/invoice/list?page=${page}`)
+      .pipe(
+        tap(console.log),
+        catchError(this.handleError)
+      );
+
+  invoice$ = (invoiceId: number) => <Observable<CustomHttpResponse<Customer & Invoice & User>>>
+    this.http.get<CustomHttpResponse<Customer & Invoice & User>>
+    (`${this.baseUrl}/invoice/get/${invoiceId}`)
       .pipe(
         tap(console.log),
         catchError(this.handleError)
