@@ -60,7 +60,7 @@
                       style="font-size: 20px;">
                     Total Billed
                     <span class="badge bg-success" style="font-size: 20px;">
-                               $ {{ state?.appData?.data?.customer.invoices.length }}
+                               $ {{ state?.appData?.data?.customer.invoices | ExtractArrayValue: 'invoices' }}
                             </span>
                   </li>
                 </ul>
@@ -177,7 +177,7 @@
                                      {{ invoice.status }}
                                   </span>
                     </td>
-                    <td>{{ invoice.date }}</td>
+                    <td>{{ invoice.date |date: 'mediumDate' }}</td>
                     <td>${{ invoice.total }}</td>
                     <td>
                       <button type="button" [routerLink]="['/invoices', invoice.id, invoice.invoiceNumber]"
