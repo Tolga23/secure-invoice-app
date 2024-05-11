@@ -8,6 +8,7 @@ import {DataState} from 'src/app/enum/datastate.enum';
 import {Invoice} from "../../interface/invoice";
 import {ActivatedRoute, ParamMap} from "@angular/router";
 import {CustomerService} from "../../service/customer.service";
+import {jsPDF as pdf} from "jspdf";
 
 const INVOICE_ID = 'id'
 
@@ -47,4 +48,10 @@ export class InvoiceComponent implements OnInit {
     );
   }
 
+  exportAsPDF() {
+    const fileName = `invoice-${this.dataSubject.value.data['invoice'].invoiceNumber}.pdf`;
+    const doc = new pdf();
+    doc.html(document.getElementById('invoice'), {margin: 5, windowWidth: 1000, width: 200,
+      callback: (invoice) => invoice.save(fileName)});
+  }
 }
