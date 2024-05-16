@@ -3,12 +3,13 @@ import {BehaviorSubject, catchError, map, Observable, of, startWith} from "rxjs"
 import {State} from "../../interface/state";
 import {CustomHttpResponse} from "../../interface/customhttpresponse";
 import {DataState} from "../../enum/datastate.enum";
-import {UserService} from "../../service/user.service";
 import {CustomerService} from "../../service/customer.service";
 import {Page} from "../../interface/page";
 import {User} from "../../interface/user";
 import {Customer} from "../../interface/customer";
 import {Router} from "@angular/router";
+import {HttpEvent, HttpEventType, HttpResponse} from "@angular/common/http";
+import {saveAs} from 'file-saver';
 
 @Component({
   selector: 'app-home',
@@ -27,6 +28,9 @@ export class HomeComponent implements OnInit {
 
   private currentPageSubject = new BehaviorSubject<number>(0)
   currentPage$ = this.currentPageSubject.asObservable()
+
+  private fileStatusSubject = new BehaviorSubject<{status: string, type: string, percent: number}>(undefined)
+  fileStatus$ = this.fileStatusSubject.asObservable()
 
   readonly DataState = DataState
 
@@ -69,5 +73,44 @@ export class HomeComponent implements OnInit {
 
   selectCustomer(customer: Customer): void {
     this.router.navigate([`/customer/${customer.id}`])
+  }
+
+  report(): void {
+    this.homeState$ = this.customerService.downloadReport$()
+      .pipe(
+        map(response => {
+          console.log(response)
+          this.reportProgress(response)
+          return {dataState: DataState.LOADED, appData: this.dataSubject.value}
+        }),
+        startWith({dataState: DataState.LOADED, appData: this.dataSubject.value}),
+        catchError((error: string) => {
+          return of({dataState: DataState.LOADED, error, appData: this.dataSubject.value})
+        })
+      )
+  }
+
+  private reportProgress(httpEvent: HttpEvent<string[] | Blob>) {
+    switch (httpEvent.type) {
+      case HttpEventType.DownloadProgress || HttpEventType.UploadProgress:
+        this.fileStatusSubject.next({
+          status: 'progress',
+          type: "Downloading...",
+          percent: Math.round(100 * httpEvent.loaded / httpEvent.total)})
+        break
+      case HttpEventType.ResponseHeader:
+        console.log('Header', httpEvent)
+        break
+      case HttpEventType.Response:
+        // save the file here
+        saveAs(new File([<Blob>httpEvent.body],
+        httpEvent.headers.get('File-Name'), {type: `${httpEvent.headers.get('Content-Type')};charset=utf-8`}))
+        this.fileStatusSubject.next(undefined)
+        break
+      default:
+        console.log(httpEvent)
+        break
+
+    }
   }
 }
