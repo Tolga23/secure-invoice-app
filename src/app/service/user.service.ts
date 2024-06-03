@@ -13,6 +13,7 @@ import {JwtHelperService} from "@auth0/angular-jwt";
 export class UserService {
   private readonly baseUrl: string = 'http://localhost:8080/api/user'
   private jwtHelper = new JwtHelperService()
+
   constructor(private http: HttpClient) {
   }
 
@@ -29,6 +30,14 @@ export class UserService {
   login$ = (email: string, password: string) => <Observable<CustomHttpResponse<Profile>>>
     this.http.post<CustomHttpResponse<Profile>>
     (`${this.baseUrl}/login`, {email, password})
+      .pipe(
+        tap(console.log),
+        catchError(this.handleError)
+      );
+
+  register$ = (user: User) => <Observable<CustomHttpResponse<Profile>>>
+    this.http.post<CustomHttpResponse<Profile>>
+    (`${this.baseUrl}/register`, user)
       .pipe(
         tap(console.log),
         catchError(this.handleError)
@@ -84,7 +93,7 @@ export class UserService {
         tap(console.log),
         catchError(this.handleError)
       );
-
+  
   updateRoles$ = (roleName: string) => <Observable<CustomHttpResponse<Profile>>>
     this.http.patch<CustomHttpResponse<Profile>>
     (`${this.baseUrl}/update/role/${roleName}`, {})
