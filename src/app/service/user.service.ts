@@ -93,7 +93,35 @@ export class UserService {
         tap(console.log),
         catchError(this.handleError)
       );
-  
+
+  resetPasswordByMail$ = (email: string) => <Observable<CustomHttpResponse<Profile>>>
+    this.http.get<CustomHttpResponse<Profile>>
+    (`${this.baseUrl}/resetpassword/${email}`, {})
+      .pipe(
+        tap(console.log),
+        catchError(this.handleError)
+      );
+
+  verifyResetPasswordUrl$ = (key: string) => <Observable<CustomHttpResponse<Profile>>>
+    this.http.get<CustomHttpResponse<Profile>>
+    (`${this.baseUrl}/verify/password/${key}`, {})
+      .pipe(
+        tap(console.log),
+        catchError(this.handleError)
+      );
+
+  resetPassword$ = (key: string,
+                    password: string,
+                    confirmPassword: string
+  ) => <Observable<CustomHttpResponse<Profile>>>
+    this.http.patch<CustomHttpResponse<Profile>>
+    (`${this.baseUrl}/resetpassword${key}/${password}/${confirmPassword}`, {})
+      .pipe(
+        tap(console.log),
+        catchError(this.handleError)
+      );
+
+
   updateRoles$ = (roleName: string) => <Observable<CustomHttpResponse<Profile>>>
     this.http.patch<CustomHttpResponse<Profile>>
     (`${this.baseUrl}/update/role/${roleName}`, {})
