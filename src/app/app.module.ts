@@ -5,7 +5,7 @@ import {AppComponent} from './app.component';
 import {VerifyComponent} from './pages/verify/verify.component';
 import {RegisterComponent} from './pages/register/register.component';
 import {LoginComponent} from './pages/login/login.component';
-import {ResetpasswordComponent} from './pages/resetpassword/resetpassword.component';
+import {ResetPasswordComponent} from './pages/resetpassword/reset-password.component';
 import {AppRoutingModule} from './app-routing.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
@@ -31,7 +31,7 @@ import {CacheInterceptor} from "./interceptor/cache.interceptor";
     VerifyComponent,
     RegisterComponent,
     LoginComponent,
-    ResetpasswordComponent,
+    ResetPasswordComponent,
     CustomerComponent,
     ProfileComponent,
     HomeComponent,
