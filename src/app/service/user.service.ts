@@ -6,6 +6,7 @@ import {Profile} from "../interface/profile";
 import {User} from "../interface/user";
 import {Key} from "../enum/key.enum";
 import {JwtHelperService} from "@auth0/angular-jwt";
+import {AccountType, VerifyState} from "../interface/verifystate";
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +47,14 @@ export class UserService {
   verifyCode$ = (email: string, code: string) => <Observable<CustomHttpResponse<Profile>>>
     this.http.get<CustomHttpResponse<Profile>>
     (`${this.baseUrl}/verify/code/${email}/${code}`)
+      .pipe(
+        tap(console.log),
+        catchError(this.handleError)
+      );
+
+  verify$ = (key: string, type: AccountType) => <Observable<CustomHttpResponse<Profile>>>
+    this.http.get<CustomHttpResponse<Profile>>
+    (`${this.baseUrl}/verify/${type}/${key}`)
       .pipe(
         tap(console.log),
         catchError(this.handleError)
@@ -116,6 +125,14 @@ export class UserService {
   ) => <Observable<CustomHttpResponse<Profile>>>
     this.http.patch<CustomHttpResponse<Profile>>
     (`${this.baseUrl}/resetpassword${key}/${password}/${confirmPassword}`, {})
+      .pipe(
+        tap(console.log),
+        catchError(this.handleError)
+      );
+
+  renewPassword$ = (form: {userId: number, password: string, confirmPassword: string}) => <Observable<CustomHttpResponse<Profile>>>
+    this.http.put<CustomHttpResponse<Profile>>
+    (`${this.baseUrl}/resetpassword`, form)
       .pipe(
         tap(console.log),
         catchError(this.handleError)
