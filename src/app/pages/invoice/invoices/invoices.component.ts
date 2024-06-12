@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {BehaviorSubject, catchError, map, Observable, of, startWith} from "rxjs";
-import {State} from "../../interface/state";
-import {CustomHttpResponse} from "../../interface/customhttpresponse";
-import {Page} from "../../interface/page";
-import {Invoice} from "../../interface/invoice";
-import {User} from "../../interface/user";
+import {State} from "../../../interface/state";
+import {CustomHttpResponse} from "../../../interface/customhttpresponse";
+import {Page} from "../../../interface/page";
+import {Invoice} from "../../../interface/invoice";
+import {User} from "../../../interface/user";
 import {Router} from "@angular/router";
-import {CustomerService} from "../../service/customer.service";
+import {CustomerService} from "../../../service/customer.service";
 import { DataState } from 'src/app/enum/datastate.enum';
 
 @Component({

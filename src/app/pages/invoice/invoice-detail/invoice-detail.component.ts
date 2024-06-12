@@ -1,23 +1,23 @@
 import {Component, OnInit} from '@angular/core';
 import {BehaviorSubject, catchError, map, Observable, of, startWith, switchMap} from "rxjs";
-import {State} from "../../interface/state";
-import {CustomHttpResponse} from "../../interface/customhttpresponse";
-import {Customer} from "../../interface/customer";
-import {User} from "../../interface/user";
+import {State} from "../../../interface/state";
+import {CustomHttpResponse} from "../../../interface/customhttpresponse";
+import {Customer} from "../../../interface/customer";
+import {User} from "../../../interface/user";
 import {DataState} from 'src/app/enum/datastate.enum';
-import {Invoice} from "../../interface/invoice";
+import {Invoice} from "../../../interface/invoice";
 import {ActivatedRoute, ParamMap} from "@angular/router";
-import {CustomerService} from "../../service/customer.service";
+import {CustomerService} from "../../../service/customer.service";
 import {jsPDF as pdf} from "jspdf";
 
 const INVOICE_ID = 'id'
 
 @Component({
   selector: 'app-invoice',
-  templateUrl: './invoice.component.html',
-  styleUrls: ['./invoice.component.css']
+  templateUrl: './invoice-detail.component.html',
+  styleUrls: ['./invoice-detail.component.css']
 })
-export class InvoiceComponent implements OnInit {
+export class InvoiceDetailComponent implements OnInit {
 
   invoiceState$: Observable<State<CustomHttpResponse<Customer & Invoice & User>>>
   private dataSubject = new BehaviorSubject<CustomHttpResponse<Customer & Invoice & User>>(null)

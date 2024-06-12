@@ -6,17 +6,14 @@ import {AppRoutingModule} from './app-routing.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HttpClientModule} from "@angular/common/http";
 import {ProfileComponent} from './pages/profile/profile.component';
-import {HomeComponent} from './pages/home/home/home.component';
 import {NavbarComponent} from './pages/navbar/navbar.component';
 import {StatsComponent} from './pages/stats/stats.component';
 import {NgOptimizedImage} from "@angular/common";
-import {NewinvoiceComponent} from './pages/newinvoice/newinvoice.component';
-import {InvoicesComponent} from './pages/invoices/invoices.component';
-import {InvoiceComponent} from './pages/invoice/invoice.component';
 import {CoreModule} from "./core/core.module";
 import {AuthModule} from "./pages/auth/auth.module";
 import {CustomerModule} from "./pages/customer/customer.module";
 import {HomeModule} from "./pages/home/home.module";
+import {InvoiceModule} from "./pages/invoice/invoice.module";
 
 @NgModule({
   declarations: [
@@ -24,9 +21,7 @@ import {HomeModule} from "./pages/home/home.module";
     ProfileComponent,
     NavbarComponent,
     StatsComponent,
-    NewinvoiceComponent,
-    InvoicesComponent,
-    InvoiceComponent],
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -36,7 +31,8 @@ import {HomeModule} from "./pages/home/home.module";
     CoreModule,
     AuthModule,
     CustomerModule,
-    HomeModule
+    HomeModule,
+    InvoiceModule
   ],
   bootstrap: [AppComponent]
 })

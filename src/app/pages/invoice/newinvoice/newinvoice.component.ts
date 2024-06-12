@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {CustomerService} from "../../service/customer.service";
+import {CustomerService} from "../../../service/customer.service";
 import {BehaviorSubject, catchError, map, Observable, of, startWith} from "rxjs";
-import {State} from "../../interface/state";
-import {CustomHttpResponse} from "../../interface/customhttpresponse";
+import {State} from "../../../interface/state";
+import {CustomHttpResponse} from "../../../interface/customhttpresponse";
 import {Customer} from 'src/app/interface/customer';
-import {User} from "../../interface/user";
+import {User} from "../../../interface/user";
 import {DataState} from 'src/app/enum/datastate.enum';
 import {NgForm} from "@angular/forms";
 
