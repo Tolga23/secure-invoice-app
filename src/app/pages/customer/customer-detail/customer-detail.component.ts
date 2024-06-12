@@ -1,19 +1,19 @@
 import {Component, OnInit} from '@angular/core';
 import {BehaviorSubject, catchError, map, Observable, of, startWith, switchMap} from "rxjs";
-import {State} from "../../interface/state";
-import {CustomHttpResponse} from "../../interface/customhttpresponse";
-import {Customerstate} from "../../interface/customerstate";
-import {DataState} from "../../enum/datastate.enum";
+import {State} from "../../../interface/state";
+import {CustomHttpResponse} from "../../../interface/customhttpresponse";
+import {Customerstate} from "../../../interface/customerstate";
+import {DataState} from "../../../enum/datastate.enum";
 import {ActivatedRoute, ParamMap} from "@angular/router";
-import {CustomerService} from "../../service/customer.service";
+import {CustomerService} from "../../../service/customer.service";
 import {NgForm} from "@angular/forms";
 
 @Component({
-  selector: 'app-customer',
-  templateUrl: './customer.component.html',
-  styleUrls: ['./customer.component.css']
+  selector: 'app-customer-detail',
+  templateUrl: './customer-detail.component.html',
+  styleUrls: ['./customer-detail.component.css']
 })
-export class CustomerComponent implements OnInit {
+export class CustomerDetailComponent implements OnInit {
   customerState$: Observable<State<CustomHttpResponse<Customerstate>>>
   private dataSubject = new BehaviorSubject<CustomHttpResponse<Customerstate>>(null)
   private isLoadingSubject = new BehaviorSubject<boolean>(false)

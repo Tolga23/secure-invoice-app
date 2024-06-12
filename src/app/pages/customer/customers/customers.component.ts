@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {BehaviorSubject, catchError, map, Observable, of, startWith} from "rxjs";
-import {CustomHttpResponse} from "../../interface/customhttpresponse";
-import {Page} from "../../interface/page";
-import {User} from "../../interface/user";
-import {DataState} from "../../enum/datastate.enum";
-import {State} from "../../interface/state";
-import {CustomerService} from "../../service/customer.service";
+import {CustomHttpResponse} from "../../../interface/customhttpresponse";
+import {Page} from "../../../interface/page";
+import {User} from "../../../interface/user";
+import {DataState} from "../../../enum/datastate.enum";
+import {State} from "../../../interface/state";
+import {CustomerService} from "../../../service/customer.service";
 import {NgForm} from "@angular/forms";
-import {Customer} from "../../interface/customer";
+import {Customer} from "../../../interface/customer";
 import {Router} from "@angular/router";
 
 @Component({
