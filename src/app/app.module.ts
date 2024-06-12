@@ -19,7 +19,6 @@ import {InvoiceModule} from "./pages/invoice/invoice.module";
   declarations: [
     AppComponent,
     ProfileComponent,
-    NavbarComponent,
     StatsComponent,
   ],
   imports: [
@@ -27,7 +26,6 @@ import {InvoiceModule} from "./pages/invoice/invoice.module";
     AppRoutingModule,
     NgbModule,
     HttpClientModule,
-    NgOptimizedImage,
     CoreModule,
     AuthModule,
     CustomerModule,
