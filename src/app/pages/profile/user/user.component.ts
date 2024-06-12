@@ -1,20 +1,20 @@
 import {Component, OnInit} from '@angular/core';
 import {BehaviorSubject, catchError, map, Observable, of, startWith} from "rxjs";
 import {Router} from "@angular/router";
-import {UserService} from "../../service/user.service";
-import {DataState} from "../../enum/datastate.enum";
-import {State} from "../../interface/state";
-import {CustomHttpResponse} from "../../interface/customhttpresponse";
-import {Profile} from "../../interface/profile";
+import {UserService} from "../../../service/user.service";
+import {DataState} from "../../../enum/datastate.enum";
+import {State} from "../../../interface/state";
+import {CustomHttpResponse} from "../../../interface/customhttpresponse";
+import {Profile} from "../../../interface/profile";
 import {NgForm} from "@angular/forms";
-import {EventType} from "../../enum/EventType";
+import {EventType} from "../../../enum/EventType";
 
 @Component({
   selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.css']
 })
-export class ProfileComponent implements OnInit {
+export class UserComponent implements OnInit {
   profileState$: Observable<State<CustomHttpResponse<Profile>>>
   private dataSubject = new BehaviorSubject<CustomHttpResponse<Profile>>(null)
   private isLoadingSubject = new BehaviorSubject<boolean>(false)
