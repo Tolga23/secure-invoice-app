@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {BehaviorSubject, catchError, map, Observable, of, startWith, switchMap} from "rxjs";
-import {AccountType, VerifyState} from "../../interface/verifystate";
-import {User} from "../../interface/user";
+import {AccountType, VerifyState} from "../../../interface/verifystate";
+import {User} from "../../../interface/user";
 import {DataState} from 'src/app/enum/datastate.enum';
-import {UserService} from "../../service/user.service";
+import {UserService} from "../../../service/user.service";
 import {ActivatedRoute, ParamMap} from "@angular/router";
 import {NgForm} from "@angular/forms";
 

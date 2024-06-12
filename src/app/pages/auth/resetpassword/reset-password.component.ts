@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
 import {catchError, map, Observable, of, pipe, startWith} from "rxjs";
-import {DataState} from "../../enum/datastate.enum";
-import {UserService} from "../../service/user.service";
+import {DataState} from "../../../enum/datastate.enum";
+import {UserService} from "../../../service/user.service";
 import {NgForm} from "@angular/forms";
-import {ResetPassword} from "../../interface/ResetPassword";
+import {ResetPassword} from "../../../interface/ResetPassword";
 
 @Component({
   selector: 'app-resetpassword',
