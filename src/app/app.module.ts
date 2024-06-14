@@ -10,7 +10,6 @@ import {AuthModule} from "./pages/auth/auth.module";
 import {CustomerModule} from "./pages/customer/customer.module";
 import {HomeModule} from "./pages/home/home.module";
 import {InvoiceModule} from "./pages/invoice/invoice.module";
-import {UserModule} from "./pages/profile/user.module";
 
 @NgModule({
   declarations: [
@@ -24,7 +23,6 @@ import {UserModule} from "./pages/profile/user.module";
     AuthModule,
     CustomerModule,
     InvoiceModule,
-    UserModule,
     HomeModule,
     AppRoutingModule
   ],
