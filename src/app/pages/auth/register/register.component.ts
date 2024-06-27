@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {catchError, map, Observable, of, startWith} from "rxjs";
 import {RegisterState} from "../../../interface/registerstate";
 import {DataState} from "../../../enum/datastate.enum";
@@ -8,7 +8,8 @@ import {NgForm} from "@angular/forms";
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RegisterComponent {
   registerState$: Observable<RegisterState> = of({dataState: DataState.LOADED})

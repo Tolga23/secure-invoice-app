@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {BehaviorSubject, catchError, map, Observable, of, startWith, switchMap} from "rxjs";
 import {State} from "../../../interface/state";
 import {CustomHttpResponse} from "../../../interface/customhttpresponse";
@@ -15,7 +15,8 @@ const INVOICE_ID = 'id'
 @Component({
   selector: 'app-invoice',
   templateUrl: './invoice-detail.component.html',
-  styleUrls: ['./invoice-detail.component.css']
+  styleUrls: ['./invoice-detail.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InvoiceDetailComponent implements OnInit {
 

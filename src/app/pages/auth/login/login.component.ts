@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {UserService} from "../../../service/user.service";
 import {NgForm} from "@angular/forms";
@@ -10,7 +10,8 @@ import {Key} from "../../../enum/key.enum";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent implements OnInit{
   loginState$: Observable<LoginState> = of({dataState: DataState.LOADED})

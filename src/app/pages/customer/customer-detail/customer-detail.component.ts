@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {BehaviorSubject, catchError, map, Observable, of, startWith, switchMap} from "rxjs";
 import {State} from "../../../interface/state";
 import {CustomHttpResponse} from "../../../interface/customhttpresponse";
@@ -11,7 +11,8 @@ import {NgForm} from "@angular/forms";
 @Component({
   selector: 'app-customer-detail',
   templateUrl: './customer-detail.component.html',
-  styleUrls: ['./customer-detail.component.css']
+  styleUrls: ['./customer-detail.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CustomerDetailComponent implements OnInit {
   customerState$: Observable<State<CustomHttpResponse<Customerstate>>>

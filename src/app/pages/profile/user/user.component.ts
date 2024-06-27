@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {BehaviorSubject, catchError, map, Observable, of, startWith} from "rxjs";
 import {Router} from "@angular/router";
 import {UserService} from "../../../service/user.service";
@@ -12,7 +12,8 @@ import {EventType} from "../../../enum/EventType";
 @Component({
   selector: 'app-profile',
   templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css']
+  styleUrls: ['./user.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserComponent implements OnInit {
   profileState$: Observable<State<CustomHttpResponse<Profile>>>

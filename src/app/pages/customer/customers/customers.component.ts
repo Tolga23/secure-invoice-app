@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {BehaviorSubject, catchError, map, Observable, of, startWith} from "rxjs";
 import {CustomHttpResponse} from "../../../interface/customhttpresponse";
 import {Page} from "../../../interface/page";
@@ -13,7 +13,8 @@ import {Router} from "@angular/router";
 @Component({
   selector: 'app-customers',
   templateUrl: './customers.component.html',
-  styleUrls: ['./customers.component.css']
+  styleUrls: ['./customers.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CustomersComponent implements OnInit {
   customersState$: Observable<State<CustomHttpResponse<Page<Customer> & User>>>

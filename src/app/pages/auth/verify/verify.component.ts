@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {BehaviorSubject, catchError, map, Observable, of, startWith, switchMap} from "rxjs";
 import {AccountType, VerifyState} from "../../../interface/verifystate";
 import {User} from "../../../interface/user";
@@ -10,7 +10,8 @@ import {NgForm} from "@angular/forms";
 @Component({
   selector: 'app-verify',
   templateUrl: './verify.component.html',
-  styleUrls: ['./verify.component.css']
+  styleUrls: ['./verify.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VerifyComponent implements OnInit {
   verifyState$: Observable<VerifyState>

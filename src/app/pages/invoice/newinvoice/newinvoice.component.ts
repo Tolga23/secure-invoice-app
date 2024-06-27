@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {CustomerService} from "../../../service/customer.service";
 import {BehaviorSubject, catchError, map, Observable, of, startWith} from "rxjs";
 import {State} from "../../../interface/state";
@@ -11,7 +11,8 @@ import {NgForm} from "@angular/forms";
 @Component({
   selector: 'app-newinvoice',
   templateUrl: './newinvoice.component.html',
-  styleUrls: ['./newinvoice.component.css']
+  styleUrls: ['./newinvoice.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewinvoiceComponent implements OnInit {
   newInvoiceState$: Observable<State<CustomHttpResponse<Customer[] & User>>>
