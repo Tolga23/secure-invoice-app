@@ -8,9 +8,7 @@ import {Key} from "../enum/key.enum";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {AccountType, VerifyState} from "../interface/verifystate";
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class UserService {
   private readonly baseUrl: string = 'http://localhost:8080/api/user'
   private jwtHelper = new JwtHelperService()

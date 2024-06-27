@@ -10,7 +10,7 @@ import {Customerstate} from "../interface/customerstate";
 import {Invoice} from "../interface/invoice";
 
 
-@Injectable({providedIn: 'root'})
+@Injectable()
 export class CustomerService {
   private readonly baseUrl: string = 'http://localhost:8080/customer'
 
