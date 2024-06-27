@@ -6,6 +6,7 @@ import {BehaviorSubject, catchError, map, Observable, of, startWith} from "rxjs"
 import {LoginState} from "../../../interface/appstates";
 import {DataState} from "../../../enum/datastate.enum";
 import {Key} from "../../../enum/key.enum";
+import {NotificationService} from "../../../service/notification.service";
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,7 @@ export class LoginComponent implements OnInit{
   private emailSubject = new BehaviorSubject<string | null>(null)
   readonly DataState = DataState
 
-  constructor(private router: Router, private userService: UserService) {
+  constructor(private router: Router, private userService: UserService, private notificationService: NotificationService) {
   }
 
   ngOnInit(): void {
@@ -30,6 +31,7 @@ export class LoginComponent implements OnInit{
     this.loginState$ = this.userService.login$(loginForm.value.email, loginForm.value.password)
       .pipe(map(response => {
           if (response.data.user.usingAuth) {
+            this.notificationService.onDefault(response.message)
             this.emailSubject.next(response.data.user.email)
             this.phoneSubject.next(response.data.user.phone)
             return {
@@ -37,6 +39,7 @@ export class LoginComponent implements OnInit{
               phone: response.data.user.phone.substring(response.data.user.phone.length - 4)
             }
           } else {
+            this.notificationService.onDefault(response.message)
             localStorage.setItem(Key.TOKEN, response.data.access_token)
             localStorage.setItem(Key.REFRESH_TOKEN, response.data.refresh_token)
             this.router.navigateByUrl('/')
@@ -45,6 +48,7 @@ export class LoginComponent implements OnInit{
         }),
         startWith({dataState: DataState.LOADING, usingAuth: false}),
         catchError((error: string) => {
+          this.notificationService.onError(error)
           return of({dataState: DataState.ERROR, usingAuth: false, loginSuccess: false, error})
         })
       )

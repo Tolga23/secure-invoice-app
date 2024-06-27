@@ -4,12 +4,12 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {HttpClientModule} from "@angular/common/http";
 import {CoreModule} from "./core/core.module";
 import {AuthModule} from "./pages/auth/auth.module";
 import {CustomerModule} from "./pages/customer/customer.module";
 import {HomeModule} from "./pages/home/home.module";
 import {InvoiceModule} from "./pages/invoice/invoice.module";
+import {NotificationModule} from "./notification.module";
 
 @NgModule({
   declarations: [
@@ -18,13 +18,13 @@ import {InvoiceModule} from "./pages/invoice/invoice.module";
   imports: [
     BrowserModule,
     NgbModule,
-    HttpClientModule,
     CoreModule,
     AuthModule,
     CustomerModule,
     InvoiceModule,
     HomeModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NotificationModule
   ],
   bootstrap: [AppComponent]
 })
