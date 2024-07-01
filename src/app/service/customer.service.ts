@@ -8,11 +8,12 @@ import {Stats} from "../interface/stats";
 import {Customer} from "../interface/customer";
 import {Customerstate} from "../interface/customerstate";
 import {Invoice} from "../interface/invoice";
+import {environment} from "../../environments/environment";
 
 
 @Injectable()
 export class CustomerService {
-  private readonly baseUrl: string = 'http://localhost:8080/customer'
+  private readonly baseUrl: string = environment.API_BASE_URL + '/customer'
 
   constructor(private http: HttpClient) {
   }
@@ -20,21 +21,18 @@ export class CustomerService {
   getCustomers$ = (page: number = 0) => <Observable<CustomHttpResponse<Page<Customer> & User & Stats>>>
     this.http.get<CustomHttpResponse<Page<Customer> & User & Stats>>(`${this.baseUrl}/list?page=${page}`)
       .pipe(
-        tap(console.log),
         catchError(this.handleError)
       );
 
   customer$ = (customerId: number) => <Observable<CustomHttpResponse<Customerstate>>>
     this.http.get<CustomHttpResponse<Customerstate>>(`${this.baseUrl}/get/${customerId}`)
       .pipe(
-        tap(console.log),
         catchError(this.handleError)
       );
   newCustomer$ = (customer: Customer) => <Observable<CustomHttpResponse<Customer & User>>>
     this.http.post<CustomHttpResponse<Customer & User>>
     (`${this.baseUrl}/create`, customer)
       .pipe(
-        tap(console.log),
         catchError(this.handleError)
       );
 
@@ -42,7 +40,6 @@ export class CustomerService {
     this.http.put<CustomHttpResponse<Customerstate>>
     (`${this.baseUrl}/update`, customer)
       .pipe(
-        tap(console.log),
         catchError(this.handleError)
       );
 
@@ -50,7 +47,6 @@ export class CustomerService {
     this.http.get<CustomHttpResponse<Page<Customer> & User>>
     (`${this.baseUrl}/search?name=${name}&page=${page}`)
       .pipe(
-        tap(console.log),
         catchError(this.handleError)
       );
 
@@ -58,7 +54,6 @@ export class CustomerService {
     this.http.get<CustomHttpResponse<Customer[] & User>>
     (`${this.baseUrl}/invoice/new`,)
       .pipe(
-        tap(console.log),
         catchError(this.handleError)
       );
 
@@ -66,7 +61,6 @@ export class CustomerService {
     this.http.post<CustomHttpResponse<Customer[] & User>>
     (`${this.baseUrl}/invoice/add/${customerId}`, invoice)
       .pipe(
-        tap(console.log),
         catchError(this.handleError)
       );
 
@@ -74,7 +68,6 @@ export class CustomerService {
     this.http.get<CustomHttpResponse<Page<Invoice> & User & Stats>>
     (`${this.baseUrl}/invoice/list?page=${page}`)
       .pipe(
-        tap(console.log),
         catchError(this.handleError)
       );
 
@@ -82,14 +75,12 @@ export class CustomerService {
     this.http.get<CustomHttpResponse<Customer & Invoice & User>>
     (`${this.baseUrl}/invoice/get/${invoiceId}`)
       .pipe(
-        tap(console.log),
         catchError(this.handleError)
       );
 
   downloadReport$ = () => <Observable<HttpEvent<Blob>>>
     this.http.get(`${this.baseUrl}/download/report`, {reportProgress: true, observe: 'events', responseType: 'blob'})
       .pipe(
-        tap(console.log),
         catchError(this.handleError)
       );
 

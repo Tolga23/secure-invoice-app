@@ -7,10 +7,11 @@ import {User} from "../interface/user";
 import {Key} from "../enum/key.enum";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {AccountType, VerifyState} from "../interface/verifystate";
+import {environment} from "../../environments/environment";
 
 @Injectable()
 export class UserService {
-  private readonly baseUrl: string = 'http://localhost:8080/api/user'
+  private readonly baseUrl: string = environment.API_BASE_URL + '/api/user'
   private jwtHelper = new JwtHelperService()
 
   constructor(private http: HttpClient) {
@@ -30,7 +31,6 @@ export class UserService {
     this.http.post<CustomHttpResponse<Profile>>
     (`${this.baseUrl}/login`, {email, password})
       .pipe(
-        tap(console.log),
         catchError(this.handleError)
       );
 
@@ -38,7 +38,6 @@ export class UserService {
     this.http.post<CustomHttpResponse<Profile>>
     (`${this.baseUrl}/register`, user)
       .pipe(
-        tap(console.log),
         catchError(this.handleError)
       );
 
@@ -46,7 +45,6 @@ export class UserService {
     this.http.get<CustomHttpResponse<Profile>>
     (`${this.baseUrl}/verify/code/${email}/${code}`)
       .pipe(
-        tap(console.log),
         catchError(this.handleError)
       );
 
@@ -54,7 +52,6 @@ export class UserService {
     this.http.get<CustomHttpResponse<Profile>>
     (`${this.baseUrl}/verify/${type}/${key}`)
       .pipe(
-        tap(console.log),
         catchError(this.handleError)
       );
 
@@ -62,7 +59,6 @@ export class UserService {
     this.http.get<CustomHttpResponse<Profile>>
     (`${this.baseUrl}/profile`,)
       .pipe(
-        tap(console.log),
         catchError(this.handleError)
       )
 
@@ -71,7 +67,6 @@ export class UserService {
     (`${this.baseUrl}/refresh/token`, {headers: {Authorization: `Bearer ${localStorage.getItem(Key.REFRESH_TOKEN)}`}})
       .pipe(
         tap(response => {
-          console.log(response);
           localStorage.removeItem(Key.TOKEN);
           localStorage.removeItem(Key.REFRESH_TOKEN);
           localStorage.setItem(Key.TOKEN, response.data.access_token);
@@ -85,7 +80,6 @@ export class UserService {
     this.http.patch<CustomHttpResponse<Profile>>
     (`${this.baseUrl}/update`, user)
       .pipe(
-        tap(console.log),
         catchError(this.handleError)
       );
 
@@ -97,7 +91,6 @@ export class UserService {
     this.http.patch<CustomHttpResponse<Profile>>
     (`${this.baseUrl}/update/password`, form)
       .pipe(
-        tap(console.log),
         catchError(this.handleError)
       );
 
@@ -105,7 +98,6 @@ export class UserService {
     this.http.get<CustomHttpResponse<Profile>>
     (`${this.baseUrl}/resetpassword/${email}`, {})
       .pipe(
-        tap(console.log),
         catchError(this.handleError)
       );
 
@@ -113,7 +105,6 @@ export class UserService {
     this.http.get<CustomHttpResponse<Profile>>
     (`${this.baseUrl}/verify/password/${key}`, {})
       .pipe(
-        tap(console.log),
         catchError(this.handleError)
       );
 
@@ -124,15 +115,17 @@ export class UserService {
     this.http.patch<CustomHttpResponse<Profile>>
     (`${this.baseUrl}/resetpassword${key}/${password}/${confirmPassword}`, {})
       .pipe(
-        tap(console.log),
         catchError(this.handleError)
       );
 
-  renewPassword$ = (form: {userId: number, password: string, confirmPassword: string}) => <Observable<CustomHttpResponse<Profile>>>
+  renewPassword$ = (form: {
+    userId: number,
+    password: string,
+    confirmPassword: string
+  }) => <Observable<CustomHttpResponse<Profile>>>
     this.http.put<CustomHttpResponse<Profile>>
     (`${this.baseUrl}/resetpassword`, form)
       .pipe(
-        tap(console.log),
         catchError(this.handleError)
       );
 
@@ -141,7 +134,6 @@ export class UserService {
     this.http.patch<CustomHttpResponse<Profile>>
     (`${this.baseUrl}/update/role/${roleName}`, {})
       .pipe(
-        tap(console.log),
         catchError(this.handleError)
       );
 
@@ -161,7 +153,6 @@ export class UserService {
       this.http.patch<CustomHttpResponse<Profile>>
       (`${this.baseUrl}/update/settings`, settings)
         .pipe(
-          tap(console.log),
           catchError(this.handleError)
         );
   };
@@ -177,7 +168,6 @@ export class UserService {
     this.http.patch<CustomHttpResponse<Profile>>
     (`${this.baseUrl}/update/2fa`, {})
       .pipe(
-        tap(console.log),
         catchError(this.handleError)
       );
 
@@ -193,7 +183,6 @@ export class UserService {
     this.http.patch<CustomHttpResponse<Profile>>
     (`${this.baseUrl}/update/image`, formData)
       .pipe(
-        tap(console.log),
         catchError(this.handleError)
       );
 

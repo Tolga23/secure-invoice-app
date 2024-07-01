@@ -1,0 +1,15 @@
+services:
+  secureinvoiceapp:
+    container_name: secureinvoiceappcontainer
+    build: .
+    image: secure-invoice-app:v1
+    ports:
+      - "80:80"
+    expose:
+      - 80
+    networks:
+      - mysql-network
+
+networks:
+  mysql-network:
+    external: true
